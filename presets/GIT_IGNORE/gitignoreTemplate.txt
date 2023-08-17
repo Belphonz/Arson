@@ -14,3 +14,7 @@ _deps
 .vs/
 out/
 build/
+
+
+#Remove Arson Submodule
+Arson/
