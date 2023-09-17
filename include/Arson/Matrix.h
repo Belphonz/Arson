@@ -18,7 +18,7 @@ namespace Arn
 		const size_t _size{array_size()};
 
 		//Actual matrix
-		T* _data{new T[_size]};
+		T* _data{new T[_size]{}};
 
 	public:
 		//Default Constructor
@@ -49,8 +49,26 @@ namespace Arn
 		//WARNING : Will throw an error if the index is outside dimension length
 		template <size_t Index, size_t... Sup_Index>
 		T& secure_at();
+
+		//Direct access to the underlying array making up the Matrix
+		T* data();
+		//Returns the maximum possible number of elements in Dimension given
+		template <size_t Dimension>
+		size_t size() const;
+		//Returns the maximum possible number of elements in the Matrix
+		size_t max_size() const;
+		//Checks whether the container is empty
+		bool empty();
+		//Returns a pointer to the beginning
+		T* begin();
+		//Returns a pointer to the end (element following the last element of the matrix)
+		T* end();
+		//Fill the container with specified value
+		void fill(const T& value);
 	};
-#include "Matrix_src.h"
+	#include "Matrix_src.h"
+	#include "Matrix_init.h"
+
 }
 
 
