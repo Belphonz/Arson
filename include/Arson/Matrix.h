@@ -29,6 +29,12 @@ namespace Arn
 		template <size_t Index, size_t... Sup_Index >
 		T& at();
 
+		//Return the Element stored in the position given
+		//WARNING : Will throw an error if not the correct amount of indexes are given
+		//WARNING : Will throw an error if the index is outside dimension length
+		template <size_t Index, size_t... Sup_Index >
+		T& secure_at();
+
 		//Destructor
 		~Matrix();
 	};
