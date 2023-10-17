@@ -15,12 +15,12 @@ Matrix<T, Init_Dimension, Dimensions...>::Matrix(const Matrix& delta_matrix)
 	delete [] _all_dimensions;
 
 	_data = new T[delta_matrix._size];
-	_all_dimensions = new size_t[delta_matrix._dimension_amount];
-	_dimension_amount = delta_matrix._dimension_amount;
+	_all_dimensions = new size_t[delta_matrix.DIMENSION_AMOUNT];
+	DIMENSION_AMOUNT = delta_matrix.DIMENSION_AMOUNT;
 	_size = delta_matrix._size;
 
 	std::copy(delta_matrix._data, delta_matrix._data + _size, _data);
-	std::copy(delta_matrix._all_dimensions, delta_matrix._all_dimensions + _dimension_amount, _all_dimensions);
+	std::copy(delta_matrix._all_dimensions, delta_matrix._all_dimensions + DIMENSION_AMOUNT, _all_dimensions);
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
@@ -31,7 +31,7 @@ Matrix<T, Init_Dimension, Dimensions...>::Matrix(Matrix&& delta_matrix) noexcept
 
 	_data = delta_matrix._data;
 	_all_dimensions = delta_matrix._all_dimensions;
-	_dimension_amount = delta_matrix._dimension_amount;
+	DIMENSION_AMOUNT = delta_matrix.DIMENSION_AMOUNT;
 	_size = delta_matrix._size;
 
 	delta_matrix._data = nullptr;
@@ -48,12 +48,12 @@ Matrix<T, Init_Dimension, Dimensions...>& Matrix<T, Init_Dimension, Dimensions..
 		delete [] _all_dimensions;
 
 		_data = new T[delta_matrix._size];
-		_all_dimensions = new size_t[delta_matrix._dimension_amount];
-		_dimension_amount = delta_matrix._dimension_amount;
+		_all_dimensions = new size_t[delta_matrix.DIMENSION_AMOUNT];
+		DIMENSION_AMOUNT = delta_matrix.DIMENSION_AMOUNT;
 		_size = delta_matrix._size;
 
 		std::copy(delta_matrix._data, delta_matrix._data + _size, _data);
-		std::copy(delta_matrix._all_dimensions, delta_matrix._all_dimensions + _dimension_amount, _all_dimensions);
+		std::copy(delta_matrix._all_dimensions, delta_matrix._all_dimensions + DIMENSION_AMOUNT, _all_dimensions);
 	}
 	return *this;
 }
@@ -76,7 +76,7 @@ Matrix<T, Init_Dimension, Dimensions...>& Matrix<T, Init_Dimension, Dimensions..
 
 	_data = delta_matrix._data;
 	_all_dimensions = delta_matrix._all_dimensions;
-	_dimension_amount = delta_matrix._dimension_amount;
+	DIMENSION_AMOUNT = delta_matrix.DIMENSION_AMOUNT;
 	_size = delta_matrix._size;
 
 	delta_matrix._data = nullptr;
