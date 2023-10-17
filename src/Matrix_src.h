@@ -2,12 +2,13 @@
 #define ARSON_CLASS_MATRIX_SRC_H
 
 #include <cassert>
+#include "Matrix.h"
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-size_t Matrix<T, Init_Dimension, Dimensions...>::array_size() const
+size_t Matrix<T, Init_Dimension, Dimensions...>::array_size()
 {
 	size_t total{1};
-	for (size_t index{0}; index < _dimension_amount; ++index)
+	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
 	{
 		total *= _all_dimensions[index];
 	}
@@ -15,17 +16,17 @@ size_t Matrix<T, Init_Dimension, Dimensions...>::array_size() const
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-template <size_t Index, size_t ... Sup_Index>
-T& Matrix<T, Init_Dimension, Dimensions...>::at()
+T& Matrix<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size_t> indexes)
 {
-	assert("Incorrect ammount of elements given" && sizeof...(Sup_Index) + 1 == _dimension_amount);
+	assert("Incorrect ammount of elements given" && indexes.size() == DIMENSION_AMOUNT);
 
-	const size_t* all_indexes{new size_t[_dimension_amount]{Index, Sup_Index...}};
+	size_t* all_indexes{new size_t[DIMENSION_AMOUNT]{}};
+	std::copy(indexes.begin(), indexes.end(), all_indexes);
 	size_t total{0};
 
 	//Calculation : x + max_x * y + max_x * max_y * z ...
 
-	for (size_t index{0}; index < _dimension_amount; ++index)
+	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
 	{
 		size_t current_index{all_indexes[index]};
 		for (size_t dimension{1}; dimension < index + 1; ++dimension)
@@ -38,29 +39,31 @@ T& Matrix<T, Init_Dimension, Dimensions...>::at()
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-template <size_t Index, size_t ... Sup_Index>
-T& Matrix<T, Init_Dimension, Dimensions...>::secure_at()
+T& Matrix<T, Init_Dimension, Dimensions...>::secure_at(const std::initializer_list<size_t> indexes)
 {
-	assert("Incorrect ammount of elements given" && sizeof...(Sup_Index) + 1 == _dimension_amount);
+	assert("Incorrect ammount of elements given" && indexes.size() == DIMENSION_AMOUNT);
 
-	const size_t* all_indexes{new size_t[_dimension_amount]{Index, Sup_Index...}};
+
+	size_t* all_indexes{new size_t[DIMENSION_AMOUNT]{}};
+	std::copy(indexes.begin(), indexes.end(), all_indexes);
+	size_t total{0};
+
 
 	//Throws an error if the index is outside dimension length
 	bool checker{true};
-	for (size_t index{0}; index < _dimension_amount; ++index)
+	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
 	{
-		if (all_indexes[index] <= _all_dimensions[index])
+		if (all_indexes[index] >= _all_dimensions[index])
 		{
 			checker = false;
+			break;
 		}
 	}
 	assert("Outside the length of a dimension" && checker);
 
-	size_t total{0};
-
 	//Calculation : x + max_x * y + max_x * max_y * z ...
 
-	for (size_t index{0}; index < _dimension_amount; ++index)
+	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
 	{
 		size_t current_index{all_indexes[index]};
 		for (size_t dimension{1}; dimension < index + 1; ++dimension)
@@ -74,7 +77,7 @@ T& Matrix<T, Init_Dimension, Dimensions...>::secure_at()
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 template <size_t Dimension>
-size_t Matrix<T, Init_Dimension, Dimensions...>::size() const
+size_t Matrix<T, Init_Dimension, Dimensions...>::size()
 {
 	return _all_dimensions[Dimension - 1];
 }
@@ -85,6 +88,12 @@ T* Matrix<T, Init_Dimension, Dimensions...>::data()
 	return _data;
 }
 
+
+template <typename T, size_t Init_Dimension, size_t ... Dimensions>
+size_t Matrix<T, Init_Dimension, Dimensions...>::size(size_t dimension)
+{
+	return _all_dimensions[dimension - 1];
+}
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 size_t Matrix<T, Init_Dimension, Dimensions...>::max_size() const

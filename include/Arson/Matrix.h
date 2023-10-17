@@ -9,12 +9,12 @@ namespace Arn
 	template <typename T, size_t Init_Dimension, size_t... Dimensions>
 	class Matrix
 	{
-		const size_t _dimension_amount{sizeof...(Dimensions) + 1};
+		inline static const size_t DIMENSION_AMOUNT{sizeof...(Dimensions) + 1};
 		//Stores all dimensions size_wise
-		const size_t* _all_dimensions{new size_t[_dimension_amount]{Init_Dimension, Dimensions...}};
+		inline static const size_t* _all_dimensions{new size_t[DIMENSION_AMOUNT]{Init_Dimension, Dimensions...}};
 
 		//Find and Return the size of the array
-		size_t array_size() const;
+		[[nodiscard]] static size_t array_size() ;
 		const size_t _size{array_size()};
 
 		//Actual matrix
@@ -41,22 +41,22 @@ namespace Arn
 
 		//Return the Element stored in the position given
 		//WARNING : Will throw an error if not the correct amount of indexes are given
-		template <size_t Index, size_t... Sup_Index>
-		T& at();
+		T& at(std::initializer_list<size_t> indexes);
 
 		//Return the Element stored in the position given
 		//WARNING : Will throw an error if not the correct amount of indexes are given
 		//WARNING : Will throw an error if the index is outside dimension length
-		template <size_t Index, size_t... Sup_Index>
-		T& secure_at();
+		T& secure_at(std::initializer_list<size_t> indexes);
 
 		//Direct access to the underlying array making up the Matrix
 		T* data();
 		//Returns the maximum possible number of elements in Dimension given
 		template <size_t Dimension>
-		size_t size() const;
+		[[nodiscard]] size_t size();
+		//Returns the maximum possible number of elements in Dimension given
+		size_t size(size_t dimension);
 		//Returns the maximum possible number of elements in the Matrix
-		size_t max_size() const;
+		[[nodiscard]] size_t max_size() const;
 		//Checks whether the container is empty
 		bool empty();
 		//Returns a pointer to the beginning
