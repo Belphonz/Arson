@@ -35,6 +35,7 @@ T& Matrix<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size
 		}
 		total += current_index;
 	}
+	delete[] all_indexes; 
 	return _data[total];
 }
 
@@ -72,6 +73,7 @@ T& Matrix<T, Init_Dimension, Dimensions...>::secure_at(const std::initializer_li
 		}
 		total += current_index;
 	}
+	delete[] all_indexes; 
 	return _data[total];
 }
 
