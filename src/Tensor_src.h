@@ -1,11 +1,11 @@
-#ifndef	ARSON_CLASS_MATRIX_SRC_H
-#define ARSON_CLASS_MATRIX_SRC_H
+#ifndef	ARSON_CLASS_TENSOR_SRC_H
+#define ARSON_CLASS_TENSOR_SRC_H
 
 #include <cassert>
-#include "Matrix.h"
+#include "Arson/Tensor.h"
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-size_t Matrix<T, Init_Dimension, Dimensions...>::array_size()
+size_t Tensor<T, Init_Dimension, Dimensions...>::array_size()
 {
 	size_t total{1};
 	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
@@ -16,7 +16,7 @@ size_t Matrix<T, Init_Dimension, Dimensions...>::array_size()
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-T& Matrix<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size_t> indexes)
+T& Tensor<T, Init_Dimension, Dimensions...>::operator[](const std::initializer_list<size_t> indexes)
 {
 	assert("Incorrect ammount of elements given" && indexes.size() == DIMENSION_AMOUNT);
 
@@ -40,7 +40,7 @@ T& Matrix<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-T& Matrix<T, Init_Dimension, Dimensions...>::secure_at(const std::initializer_list<size_t> indexes)
+T& Tensor<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size_t> indexes)
 {
 	assert("Incorrect ammount of elements given" && indexes.size() == DIMENSION_AMOUNT);
 
@@ -79,50 +79,50 @@ T& Matrix<T, Init_Dimension, Dimensions...>::secure_at(const std::initializer_li
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 template <size_t Dimension>
-size_t Matrix<T, Init_Dimension, Dimensions...>::size()
+size_t Tensor<T, Init_Dimension, Dimensions...>::size()
 {
 	return _all_dimensions[Dimension - 1];
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-T* Matrix<T, Init_Dimension, Dimensions...>::data()
+T* Tensor<T, Init_Dimension, Dimensions...>::data()
 {
 	return _data;
 }
 
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-size_t Matrix<T, Init_Dimension, Dimensions...>::size(size_t dimension)
+size_t Tensor<T, Init_Dimension, Dimensions...>::size(size_t dimension)
 {
 	return _all_dimensions[dimension - 1];
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-size_t Matrix<T, Init_Dimension, Dimensions...>::max_size() const
+size_t Tensor<T, Init_Dimension, Dimensions...>::max_size() const
 {
 	return _size;
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-bool Matrix<T, Init_Dimension, Dimensions...>::empty()
+bool Tensor<T, Init_Dimension, Dimensions...>::empty()
 {
 	return _data == _data + _size;
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-T* Matrix<T, Init_Dimension, Dimensions...>::begin()
+T* Tensor<T, Init_Dimension, Dimensions...>::begin()
 {
 	return _data;
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-T* Matrix<T, Init_Dimension, Dimensions...>::end()
+T* Tensor<T, Init_Dimension, Dimensions...>::end()
 {
 	return _data + _size + 1;
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
-void Matrix<T, Init_Dimension, Dimensions...>::fill(const T& value)
+void Tensor<T, Init_Dimension, Dimensions...>::fill(const T& value)
 {
 	std::fill(_data, _data + _size, value);
 }
