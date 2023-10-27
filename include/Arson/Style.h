@@ -8,6 +8,11 @@ namespace Arn
 	// Primitive type Aliases
 	using Byte = unsigned char;
 	using UInt = unsigned int;
+
 }
+
+// User defined literals
+short operator ""_shrt (unsigned long long int);
+size_t operator ""_sz (unsigned long long int);
 
 #endif
