@@ -28,6 +28,46 @@ void Tensor2D<T>::resize(const Vector2<size_t> new_dimensions)
 		reserve(new_dimensions.x * new_dimensions.y);
 	}
 
+	const size_t shift_amount{new_dimensions.y <= _dimensions.y ? new_dimensions.y : _dimensions.y};
+	//If the new width is smaller or equal to the old one
+	if (_dimensions.x >= new_dimensions.x)
+	{
+		size_t left_current_pos{new_dimensions.x};
+		//It squashes the values outside the new width by copying the next widths into their position 
+		for (size_t index{0}; index < shift_amount; ++index)
+		{
+			size_t get_position{(index + 1) * _dimensions.x};
+			std::copy(_data + get_position, _data + get_position + new_dimensions.x, _data + left_current_pos);
+			left_current_pos += new_dimensions.x;
+		}
+	}
+	//If the new width is bigger than the old one
+	else if (_dimensions.x < new_dimensions.x)
+	{																										
+		size_t total_shift{0};
+		const size_t shift{new_dimensions.x - _dimensions.x};
+
+		//It moves the widths of the old array to make space for the new spaces which are opened up
+		for (size_t index{0}; index < shift_amount; ++index)
+		{
+			size_t get_position{(index + 1) * _dimensions.x + total_shift};
+			std::copy(_data + get_position, _data + _capacity, _data + get_position + shift);
+			total_shift += shift;
+		}
+
+		//Sets the Values of the new opened up spaces to 0
+		for (size_t delta_index{0}; delta_index < _dimensions.y; ++delta_index)
+		{
+			for (size_t index{0}; index < new_dimensions.x; ++index)
+			{
+				if (index >= _dimensions.x)
+				{
+					_data[index + delta_index * new_dimensions.x] = 0;
+				}
+			}
+		}
+	}
+
 	_dimensions = new_dimensions;
 }
 
@@ -46,6 +86,7 @@ void Tensor2D<T>::reserve(const size_t new_alloc)
 		std::copy(_data, _data + _capacity, temp);
 		delete [] _data;
 		_data = temp;
+		std::fill(_data + _capacity, _data + new_alloc, 0);
 		_capacity = new_alloc;
 	}
 }
