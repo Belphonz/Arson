@@ -1,5 +1,6 @@
 #ifndef	ARSON_CLASS_TENSOR_2D_SRC_H
 #define ARSON_CLASS_TENSOR_2D_SRC_H
+#include <cassert>
 
 template <typename T>
 T& Tensor2D<T>::operator[](const Vector2<size_t> indexes)
