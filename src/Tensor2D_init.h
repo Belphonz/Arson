@@ -72,7 +72,7 @@ Tensor2D<T>& Tensor2D<T>::operator=(const Tensor2D& delta_tensor)
 
 		std::copy(delta_tensor._data, delta_tensor._data + delta_tensor._capacity, _data);
 	}
-	return this;
+	return *this;
 }
 
 template <typename T>
@@ -81,7 +81,7 @@ Tensor2D<T>& Tensor2D<T>::operator=(std::initializer_list<T> tensor)
 	assert("Too many elements given" && tensor.size() <= _dimensions.x * _dimensions.y);
 	std::copy(tensor.begin(), tensor.end(), _data);
 	std::fill(_data + tensor.size(),_data + _dimensions.x * _dimensions.y,0);
-	return this;
+	return *this;
 }
 
 template <typename T>
@@ -96,7 +96,7 @@ Tensor2D<T>& Tensor2D<T>::operator=(Tensor2D&& delta_tensor) noexcept
 
 	delta_tensor._data = nullptr;
 
-	return this;
+	return *this;
 }
 
 #endif
