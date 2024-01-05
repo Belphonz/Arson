@@ -13,8 +13,8 @@ Tensor<T, Init_Dimension, Dimensions...>::Tensor(std::initializer_list<T> tensor
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 Tensor<T, Init_Dimension, Dimensions...>::Tensor(const Tensor& delta_tensor)
 {
-	delete [] _data;
-	delete [] _all_dimensions;
+	delete[] _data;
+	delete[] _all_dimensions;
 
 	_data = new T[delta_tensor._size];
 	_all_dimensions = new size_t[delta_tensor.DIMENSION_AMOUNT];
@@ -28,8 +28,8 @@ Tensor<T, Init_Dimension, Dimensions...>::Tensor(const Tensor& delta_tensor)
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 Tensor<T, Init_Dimension, Dimensions...>::Tensor(Tensor&& delta_tensor) noexcept
 {
-	delete [] _data;
-	delete [] _all_dimensions;
+	delete[] _data;
+	delete[] _all_dimensions;
 
 	_data = delta_tensor._data;
 	_all_dimensions = delta_tensor._all_dimensions;
@@ -46,8 +46,8 @@ Tensor<T, Init_Dimension, Dimensions...>& Tensor<T, Init_Dimension, Dimensions..
 {
 	if (this != &delta_tensor)
 	{
-		delete [] _data;
-		delete [] _all_dimensions;
+		delete[] _data;
+		delete[] _all_dimensions;
 
 		_data = new T[delta_tensor._size];
 		_all_dimensions = new size_t[delta_tensor.DIMENSION_AMOUNT];
@@ -73,8 +73,8 @@ template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 Tensor<T, Init_Dimension, Dimensions...>& Tensor<T, Init_Dimension, Dimensions...>
 ::operator=(Tensor&& delta_tensor) noexcept
 {
-	delete [] _data;
-	delete [] _all_dimensions;
+	delete[] _data;
+	delete[] _all_dimensions;
 
 	_data = delta_tensor._data;
 	_all_dimensions = delta_tensor._all_dimensions;
@@ -90,8 +90,8 @@ Tensor<T, Init_Dimension, Dimensions...>& Tensor<T, Init_Dimension, Dimensions..
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 Tensor<T, Init_Dimension, Dimensions...>::~Tensor()
 {
-	delete [] _all_dimensions;
-	delete [] _data;
+	delete[] _all_dimensions;
+	delete[] _data;
 }
 
 #endif

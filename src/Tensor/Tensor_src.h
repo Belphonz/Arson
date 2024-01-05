@@ -7,8 +7,8 @@
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 size_t Tensor<T, Init_Dimension, Dimensions...>::array_size()
 {
-	size_t total{1};
-	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
+	size_t total{ 1 };
+	for (size_t index{ 0 }; index < DIMENSION_AMOUNT; ++index)
 	{
 		total *= _all_dimensions[index];
 	}
@@ -18,41 +18,39 @@ size_t Tensor<T, Init_Dimension, Dimensions...>::array_size()
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 T& Tensor<T, Init_Dimension, Dimensions...>::operator[](const std::initializer_list<size_t> indexes)
 {
-	assert("Incorrect ammount of elements given" && indexes.size() == DIMENSION_AMOUNT);
+	assert("Incorrect amount of elements given" && indexes.size() == DIMENSION_AMOUNT);
 
-	size_t* all_indexes{new size_t[DIMENSION_AMOUNT]{}};
+	size_t* all_indexes{ new size_t[DIMENSION_AMOUNT]{} };
 	std::copy(indexes.begin(), indexes.end(), all_indexes);
-	size_t total{0};
+	size_t total{ 0 };
 
 	//Calculation : x + max_x * y + max_x * max_y * z ...
 
-	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
+	for (size_t index{ 0 }; index < DIMENSION_AMOUNT; ++index)
 	{
-		size_t current_index{all_indexes[index]};
-		for (size_t dimension{1}; dimension < index + 1; ++dimension)
+		size_t current_index{ all_indexes[index] };
+		for (size_t dimension{ 1 }; dimension < index + 1; ++dimension)
 		{
 			current_index *= _all_dimensions[dimension - 1];
 		}
 		total += current_index;
 	}
-	delete[] all_indexes; 
+	delete[] all_indexes;
 	return _data[total];
 }
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 T& Tensor<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size_t> indexes)
 {
-	assert("Incorrect ammount of elements given" && indexes.size() == DIMENSION_AMOUNT);
+	assert("Incorrect amount of elements given" && indexes.size() == DIMENSION_AMOUNT);
 
-
-	size_t* all_indexes{new size_t[DIMENSION_AMOUNT]{}};
+	size_t* all_indexes{ new size_t[DIMENSION_AMOUNT]{} };
 	std::copy(indexes.begin(), indexes.end(), all_indexes);
-	size_t total{0};
-
+	size_t total{ 0 };
 
 	//Throws an error if the index is outside dimension length
-	bool checker{true};
-	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
+	bool checker{ true };
+	for (size_t index{ 0 }; index < DIMENSION_AMOUNT; ++index)
 	{
 		if (all_indexes[index] >= _all_dimensions[index])
 		{
@@ -64,16 +62,16 @@ T& Tensor<T, Init_Dimension, Dimensions...>::at(const std::initializer_list<size
 
 	//Calculation : x + max_x * y + max_x * max_y * z ...
 
-	for (size_t index{0}; index < DIMENSION_AMOUNT; ++index)
+	for (size_t index{ 0 }; index < DIMENSION_AMOUNT; ++index)
 	{
-		size_t current_index{all_indexes[index]};
-		for (size_t dimension{1}; dimension < index + 1; ++dimension)
+		size_t current_index{ all_indexes[index] };
+		for (size_t dimension{ 1 }; dimension < index + 1; ++dimension)
 		{
 			current_index *= _all_dimensions[dimension - 1];
 		}
 		total += current_index;
 	}
-	delete[] all_indexes; 
+	delete[] all_indexes;
 	return _data[total];
 }
 
@@ -89,7 +87,6 @@ T* Tensor<T, Init_Dimension, Dimensions...>::data()
 {
 	return _data;
 }
-
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 size_t Tensor<T, Init_Dimension, Dimensions...>::size(size_t dimension)
@@ -126,6 +123,5 @@ void Tensor<T, Init_Dimension, Dimensions...>::fill(const T& value)
 {
 	std::fill(_data, _data + _size, value);
 }
-
 
 #endif
