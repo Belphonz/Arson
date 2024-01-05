@@ -1,40 +1,40 @@
-#ifndef	ARSON_CLASS_TENSOR_2D_H
-#define ARSON_CLASS_TENSOR_2D_H
+#ifndef	ARSON_CLASS_TENSOR_2D_VECTOR_H
+#define ARSON_CLASS_TENSOR_2D_VECTOR_H
 
-#include "Struct_Common.h"
+#include <initializer_list>
+#include "Arson/Common/Struct_Common.h"
 
 namespace Arn
 {
-	//Specialized 2D array class of variable length, designed to optimize cache 
+	//Specialized 2D array class of variable length, designed to optimize cache
 	template <typename T>
-	class Tensor2D
+	class Tensor2DVector
 	{
-		Vector2<size_t> _dimensions{1,1};
+		Vector2<size_t> _dimensions{ 1,1 };
 
 		//Actual tensor
 		T* _data{};
 		size_t _capacity{};
 		bool FORCE_STATIC{};
-		
 
 	public:
-		//Constructor 
-		explicit Tensor2D(Vector2<size_t> dimensions,bool force_static =  false);
-		//Alternative Constructor 
-		Tensor2D(Vector2<size_t> dimensions, std::initializer_list<T> tensor,bool force_static =  false);
+		//Constructor
+		explicit Tensor2DVector(Vector2<size_t> dimensions, bool force_static = false);
+		//Alternative Constructor
+		Tensor2DVector(Vector2<size_t> dimensions, std::initializer_list<T> tensor, bool force_static = false);
 		//Copy Constructor
-		Tensor2D(const Tensor2D& delta_tensor);
+		Tensor2DVector(const Tensor2DVector& delta_tensor);
 		//Move Constructor
-		Tensor2D(Tensor2D&& delta_tensor) noexcept;
+		Tensor2DVector(Tensor2DVector&& delta_tensor) noexcept;
 		//Destructor
-		~Tensor2D();
+		~Tensor2DVector();
 
-		//Copy assignment 
-		Tensor2D& operator=(const Tensor2D& delta_tensor);
-		//Operator= List assignment   
-		Tensor2D& operator=(std::initializer_list<T> tensor);
+		//Copy assignment
+		Tensor2DVector& operator=(const Tensor2DVector& delta_tensor);
+		//Operator= List assignment
+		Tensor2DVector& operator=(std::initializer_list<T> tensor);
 		//Move assignment
-		Tensor2D& operator=(Tensor2D&& delta_tensor) noexcept;
+		Tensor2DVector& operator=(Tensor2DVector&& delta_tensor) noexcept;
 
 		//Return the Element stored in the position given
 		T& operator[](Vector2<size_t> indexes);
@@ -72,8 +72,8 @@ namespace Arn
 		//Fill the container with specified value
 		void fill(const T& value);
 	};
-	#include "Tensor2D_src.h"
-	#include "Tensor2D_init.h"
+#include "Tensor2D/Vector/Tensor2DVector_src.h"
+#include "Tensor2D/Vector/Tensor2DVector_init.h"
 }
-   
+
 #endif

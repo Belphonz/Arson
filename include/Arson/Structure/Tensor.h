@@ -5,25 +5,25 @@
 
 namespace Arn
 {
-	//Multidimensional array class of variable dimension, designed to optimize cache 
+	//Multidimensional array class of variable dimension, designed to optimize cache
 	template <typename T, size_t Init_Dimension, size_t... Dimensions>
 	class Tensor
 	{
-		inline static const size_t DIMENSION_AMOUNT{sizeof...(Dimensions) + 1};
+		inline static const size_t DIMENSION_AMOUNT{ sizeof...(Dimensions) + 1 };
 		//Stores all dimensions size_wise
-		inline static const size_t* _all_dimensions{new size_t[DIMENSION_AMOUNT]{Init_Dimension, Dimensions...}};
+		inline static const size_t* _all_dimensions{ new size_t[DIMENSION_AMOUNT]{Init_Dimension, Dimensions...} };
 
 		//Find and Return the size of the array
-		[[nodiscard]] static size_t array_size() ;
-		const size_t _size{array_size()};
+		[[nodiscard]] static size_t array_size();
+		const size_t _size{ array_size() };
 
 		//Actual tensor
-		T* _data{new T[_size]{}};
+		T* _data{ new T[_size]{} };
 
 	public:
 		//Default Constructor
 		Tensor() = default;
-		//Constructor 
+		//Constructor
 		Tensor(std::initializer_list<T> tensor);
 		//Copy Constructor
 		Tensor(const Tensor& delta_tensor);
@@ -32,9 +32,9 @@ namespace Arn
 		//Destructor
 		~Tensor();
 
-		//Copy assignment 
+		//Copy assignment
 		Tensor& operator=(const Tensor& delta_tensor);
-		//Operator= List assignment   
+		//Operator= List assignment
 		Tensor& operator=(std::initializer_list<T> tensor);
 		//Move assignment
 		Tensor& operator=(Tensor&& delta_tensor) noexcept;
@@ -66,10 +66,8 @@ namespace Arn
 		//Fill the container with specified value
 		void fill(const T& value);
 	};
-	#include "Tensor_src.h"
-	#include "Tensor_init.h"
-
+#include "Tensor_src.h"
+#include "Tensor_init.h"
 }
-
 
 #endif
