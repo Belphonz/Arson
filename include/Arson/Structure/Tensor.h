@@ -66,8 +66,8 @@ namespace Arn
 		//Fill the container with specified value
 		void fill(const T& value);
 	};
-#include "Tensor_src.h"
-#include "Tensor_init.h"
+#include "../src/Tensor/Tensor_src.h"
+#include "../src/Tensor/Tensor_init.h"
 }
 
 #endif

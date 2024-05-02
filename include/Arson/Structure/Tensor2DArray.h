@@ -1,7 +1,7 @@
 #ifndef	ARSON_CLASS_TENSOR_2D_ARRAY_H
 #define ARSON_CLASS_TENSOR_2D_ARRAY_H
 
-#include "Arson/Common/Struct_Common.h"
+#include "Arson/Structure/Vector2.h"
 
 namespace Arn
 {
@@ -30,7 +30,7 @@ namespace Arn
 		//Fill the container with specified value
 		void fill(const T& value);
 	};
-#include "Tensor2D/Array/Tensor2DArray_src.h"
+#include "../src/Tensor2D/Array/Tensor2DArray_src.h"
 }
 
 #endif
