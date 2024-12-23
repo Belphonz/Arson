@@ -2,7 +2,7 @@
 #define ARSON_CLASS_TENSOR_SRC_H
 
 #include <cassert>
-#include "Arson/Tensor.h"
+#include "Arson/Structure/Tensor.h"
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 size_t Tensor<T, Init_Dimension, Dimensions...>::array_size()

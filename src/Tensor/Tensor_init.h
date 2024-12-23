@@ -1,7 +1,7 @@
 #ifndef	ARSON_CLASS_TENSOR_INIT_H
 #define ARSON_CLASS_TENSOR_INIT_H
 
-#include "Arson/Tensor.h"
+#include "Arson/Structure/Tensor.h"
 
 template <typename T, size_t Init_Dimension, size_t ... Dimensions>
 Tensor<T, Init_Dimension, Dimensions...>::Tensor(std::initializer_list<T> tensor)
