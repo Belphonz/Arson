@@ -1,5 +1,5 @@
-#ifndef	ARSON_CLASS_TENSOR_H
-#define ARSON_CLASS_TENSOR_H
+#ifndef	ARSON_TENSOR_H
+#define ARSON_TENSOR_H
 
 #include <cstdarg>
 

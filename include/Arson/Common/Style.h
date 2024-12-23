@@ -4,13 +4,13 @@
 namespace Arn
 {
 	// Primitive type Aliases
-	using Byte = unsigned char;
-	using WideByte = wchar_t;
-	using UInt = unsigned int;
+	using byte = unsigned char;
+	using wideByte = unsigned short;
+	using uint = unsigned int;
 }
 
 // User defined literals
-short operator ""_shrt(unsigned long long int);
-size_t operator ""_sz(unsigned long long int);
+short operator ""shrt(unsigned long long int);
+size_t operator ""sz(unsigned long long int);
 
 #endif

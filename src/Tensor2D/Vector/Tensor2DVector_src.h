@@ -12,7 +12,7 @@ T& Tensor2DVector<T>::operator[](const Vector2<size_t> indexes)
 }
 
 template <typename T>
-T& Tensor2DVector<T>::at(const Vector2<size_t> indexes)
+T& Tensor2DVector<T>::At(const Vector2<size_t> indexes)
 {
 	//Secure Checker
 	assert("Outside the size of the Width" && indexes.x < _dimensions.x);
@@ -23,140 +23,133 @@ T& Tensor2DVector<T>::at(const Vector2<size_t> indexes)
 }
 
 template <typename T>
-void Tensor2DVector<T>::resize(const Vector2<size_t> new_dimensions)
+void Tensor2DVector<T>::Resize(const Vector2<size_t> newDimensions)
 {
-	if (FORCE_STATIC) { return; }
-	if (new_dimensions.x * new_dimensions.y > _capacity)
-	{
-		reserve(new_dimensions.x * new_dimensions.y);
-	}
+	if (_forceStatic) { return; }
 
-	const size_t shift_amount{ new_dimensions.y <= _dimensions.y ? new_dimensions.y : _dimensions.y };
+	Reserve(newDimensions.x * newDimensions.y);
+
+	const size_t shiftAmount{ newDimensions.y <= _dimensions.y ? newDimensions.y : _dimensions.y };
 	//If the new width is smaller or equal to the old one
-	if (_dimensions.x >= new_dimensions.x)
+	if (_dimensions.x >= newDimensions.x)
 	{
-		size_t left_current_pos{ new_dimensions.x };
+		size_t leftCurrentPos{ newDimensions.x };
 		//It squashes the values outside the new width by copying the next widths into their position
-		for (size_t index{ 0 }; index < shift_amount; ++index)
+		for (size_t i{ 0 }; i < shiftAmount; ++i)
 		{
-			size_t get_position{ (index + 1) * _dimensions.x };
-			std::copy(_data + get_position, _data + get_position + new_dimensions.x, _data + left_current_pos);
-			left_current_pos += new_dimensions.x;
+			size_t getPos{ (i + 1) * _dimensions.x };
+			std::copy(_data + getPos, _data + getPos + newDimensions.x, _data + leftCurrentPos);
+			leftCurrentPos += newDimensions.x;
 		}
 	}
 	//If the new width is bigger than the old one
-	else if (_dimensions.x < new_dimensions.x)
+	else
 	{
-		size_t total_shift{ 0 };
-		const size_t shift{ new_dimensions.x - _dimensions.x };
+		size_t totalShift{ 0 };
+		const size_t shift{ newDimensions.x - _dimensions.x };
 
 		//It moves the widths of the old array to make space for the new spaces which are opened up
-		for (size_t index{ 0 }; index < shift_amount; ++index)
+		for (size_t i{ 0 }; i < shiftAmount; ++i)
 		{
-			size_t get_position{ (index + 1) * _dimensions.x + total_shift };
-			std::copy(_data + get_position, _data + _capacity, _data + get_position + shift);
-			total_shift += shift;
+			size_t getPos{ (i + 1) * _dimensions.x + totalShift };
+			std::copy(_data + getPos, _data + _capacity, _data + getPos + shift);
+			totalShift += shift;
 		}
 
 		//Sets the Values of the new opened up spaces to 0
-		for (size_t delta_index{ 0 }; delta_index < _dimensions.y; ++delta_index)
+		for (size_t j{ 0 }; j < _dimensions.y; ++j)
 		{
-			for (size_t index{ 0 }; index < new_dimensions.x; ++index)
+			for (size_t i{ 0 }; i < newDimensions.x; ++i)
 			{
-				if (index >= _dimensions.x)
-				{
-					_data[index + delta_index * new_dimensions.x] = 0;
-				}
+				if (i >= _dimensions.x) { _data[i + j * newDimensions.x] = T{}; }
 			}
 		}
 	}
 
-	_dimensions = new_dimensions;
+	_dimensions = newDimensions;
 }
 
 template <typename T>
-T* Tensor2DVector<T>::data()
+T* Tensor2DVector<T>::Data()
 {
 	return _data;
 }
 
 template <typename T>
-void Tensor2DVector<T>::reserve(const size_t new_alloc)
+void Tensor2DVector<T>::Reserve(const size_t newAlloc)
 {
-	if (new_alloc > _capacity)
-	{
-		T* temp{ new T[new_alloc] };
-		std::copy(_data, _data + _capacity, temp);
-		delete[] _data;
-		_data = temp;
-		std::fill(_data + _capacity, _data + new_alloc, 0);
-		_capacity = new_alloc;
-	}
+	if (newAlloc < _capacity) { return; }
+
+	T* temp{ new T[newAlloc] };
+	std::copy(_data, _data + _capacity, temp);
+	delete[] _data;
+	_data = temp;
+	std::fill(_data + _capacity, _data + newAlloc, T{});
+	_capacity = newAlloc;
 }
 
 template <typename T>
-void Tensor2DVector<T>::shrink_to_fit()
+void Tensor2DVector<T>::ShrinkToFit()
 {
-	if (_capacity > _dimensions.x * _dimensions.y)
-	{
-		T* temp{ new T[_dimensions.x * _dimensions.y] };
-		std::copy(_data, _data + _dimensions.x * _dimensions.y, temp);
-		delete[] _data;
-		_data = temp;
-		_capacity = _dimensions.x * _dimensions.y;
-	}
+	if (_capacity < _dimensions.x * _dimensions.y) { return; }
+
+	T* temp{ new T[_dimensions.x * _dimensions.y] };
+	std::copy(_data, _data + _dimensions.x * _dimensions.y, temp);
+	delete[] _data;
+	_data = temp;
+	_capacity = _dimensions.x * _dimensions.y;
 }
 
 template <typename T>
-Vector2<size_t> Tensor2DVector<T>::dimensions() const
+Vector2<size_t> Tensor2DVector<T>::Dimensions() const
 {
 	return _dimensions;
 }
 
 template <typename T>
-size_t Tensor2DVector<T>::width() const
+size_t Tensor2DVector<T>::Width() const
 {
 	return _dimensions.x;
 }
 
 template <typename T>
-size_t Tensor2DVector<T>::height() const
+size_t Tensor2DVector<T>::Height() const
 {
 	return _dimensions.y;
 }
 
 template <typename T>
-size_t Tensor2DVector<T>::max_size() const
+size_t Tensor2DVector<T>::MaxSize() const
 {
 	return _dimensions.x * _dimensions.y;
 }
 
 template <typename T>
-size_t Tensor2DVector<T>::capacity() const
+size_t Tensor2DVector<T>::Capacity() const
 {
 	return _capacity;
 }
 
 template <typename T>
-bool Tensor2DVector<T>::empty()
+bool Tensor2DVector<T>::Empty()
 {
 	return _data == _data + _capacity;
 }
 
 template <typename T>
-T* Tensor2DVector<T>::begin()
+T* Tensor2DVector<T>::Begin()
 {
 	return _data;
 }
 
 template <typename T>
-T* Tensor2DVector<T>::end()
+T* Tensor2DVector<T>::End()
 {
 	return _data + _capacity + 1;
 }
 
 template <typename T>
-void Tensor2DVector<T>::fill(const T& value)
+void Tensor2DVector<T>::Fill(const T& value)
 {
 	std::fill(_data, _data + _dimensions.x * _dimensions.y, value);
 }
