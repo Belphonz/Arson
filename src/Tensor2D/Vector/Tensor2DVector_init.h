@@ -1,10 +1,11 @@
 #ifndef	ARSON_CLASS_TENSOR_2D_VECTOR_INIT_H
 #define ARSON_CLASS_TENSOR_2D_VECTOR_INIT_H
 
+#include <cassert>
 #include "Arson/Structure/Tensor2DVector.h"
 
 template <typename T>
-Tensor2DVector<T>::Tensor2DVector(const Vector2<size_t> dimensions, const bool forceStatic)
+Arn::Tensor2DVector<T>::Tensor2DVector(const Vector2<size_t> dimensions, const bool forceStatic)
 {
 	_capacity = dimensions.x * dimensions.y;
 	_data = new T[_capacity];
@@ -15,7 +16,7 @@ Tensor2DVector<T>::Tensor2DVector(const Vector2<size_t> dimensions, const bool f
 }
 
 template <typename T>
-Tensor2DVector<T>::Tensor2DVector(const Vector2<size_t> dimensions, std::initializer_list<T> data, const bool forceStatic)
+Arn::Tensor2DVector<T>::Tensor2DVector(const Vector2<size_t> dimensions, std::initializer_list<T> data, const bool forceStatic)
 {
 	assert("Too many elements given" && data.size() <= dimensions.x * dimensions.y);
 
@@ -29,7 +30,7 @@ Tensor2DVector<T>::Tensor2DVector(const Vector2<size_t> dimensions, std::initial
 }
 
 template <typename T>
-Tensor2DVector<T>::Tensor2DVector(const Tensor2DVector& other)
+Arn::Tensor2DVector<T>::Tensor2DVector(const Tensor2DVector& other)
 {
 	delete[] _data;
 
@@ -42,7 +43,7 @@ Tensor2DVector<T>::Tensor2DVector(const Tensor2DVector& other)
 }
 
 template <typename T>
-Tensor2DVector<T>::Tensor2DVector(Tensor2DVector&& other) noexcept
+Arn::Tensor2DVector<T>::Tensor2DVector(Tensor2DVector&& other) noexcept
 {
 	delete[] _data;
 
@@ -55,13 +56,13 @@ Tensor2DVector<T>::Tensor2DVector(Tensor2DVector&& other) noexcept
 }
 
 template <typename T>
-Tensor2DVector<T>::~Tensor2DVector()
+Arn::Tensor2DVector<T>::~Tensor2DVector()
 {
 	delete[] _data;
 }
 
 template <typename T>
-Tensor2DVector<T>& Tensor2DVector<T>::operator=(const Tensor2DVector& other)
+Arn::Tensor2DVector<T>& Arn::Tensor2DVector<T>::operator=(const Tensor2DVector& other)
 {
 	if (this != &other)
 	{
@@ -78,7 +79,7 @@ Tensor2DVector<T>& Tensor2DVector<T>::operator=(const Tensor2DVector& other)
 }
 
 template <typename T>
-Tensor2DVector<T>& Tensor2DVector<T>::operator=(std::initializer_list<T> data)
+Arn::Tensor2DVector<T>& Arn::Tensor2DVector<T>::operator=(std::initializer_list<T> data)
 {
 	assert("Too many elements given" && data.size() <= _dimensions.x * _dimensions.y);
 	std::copy(data.begin(), data.end(), _data);
@@ -87,7 +88,7 @@ Tensor2DVector<T>& Tensor2DVector<T>::operator=(std::initializer_list<T> data)
 }
 
 template <typename T>
-Tensor2DVector<T>& Tensor2DVector<T>::operator=(Tensor2DVector&& other) noexcept
+Arn::Tensor2DVector<T>& Arn::Tensor2DVector<T>::operator=(Tensor2DVector&& other) noexcept
 {
 	delete[] _data;
 

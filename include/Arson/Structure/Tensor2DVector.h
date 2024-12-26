@@ -10,6 +10,7 @@ namespace Arn
 	template <typename T>
 	class Tensor2DVector
 	{
+	private:
 		Vector2<size_t> _dimensions{ 1,1 };
 
 		//Actual tensor
