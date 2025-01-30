@@ -1,7 +1,7 @@
 #ifndef	ARSON_CLASS_TENSOR_2D_ARRAY_SRC_H
 #define ARSON_CLASS_TENSOR_2D_ARRAY_SRC_H
 
-#include "Arson/Structure/Tensor2DArray.h"
+#include <Arson/Structure/Tensor2DArray.h>
 
 template<typename T, size_t SIZE_X, size_t SIZE_Y>
 T& Arn::Tensor2DArray<T, SIZE_X, SIZE_Y>::operator[](Vector2<size_t> indexes)
