@@ -5,7 +5,7 @@
 
 namespace Arn
 {
-	//Specialized 3D array struct, designed to optimize cache
+	//Specialized 3D Static array struct, designed to optimize cache
 	template <typename T, size_t SIZE_X, size_t SIZE_Y, size_t SIZE_Z>
 	struct Tensor3DArray
 	{

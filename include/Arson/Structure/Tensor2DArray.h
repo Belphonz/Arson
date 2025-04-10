@@ -5,7 +5,7 @@
 
 namespace Arn
 {
-	//Specialized 2D array struct, designed to optimize cache
+	//Specialized 2D Static array struct, designed to optimize cache
 	template <typename T, size_t SIZE_X, size_t SIZE_Y >
 	struct Tensor2DArray
 	{
