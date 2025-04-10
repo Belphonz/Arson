@@ -3,7 +3,6 @@
 
 #include <Arson/Common/StructCommon.h>
 #include <Arson/Common/Style.h>
-#include <Arson/Common/WindowsFileOpenDialog.h>
 
 #include <Arson/Structure/Tensor2DArray.h>
 #include <Arson/Structure/Tensor2DVector.h>

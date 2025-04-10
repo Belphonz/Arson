@@ -3,6 +3,5 @@
 
 #include <Arson/Common/StructCommon.h>
 #include <Arson/Common/Style.h>
-#include <Arson/Common/WindowsFileOpenDialog.h>
 
 #endif
